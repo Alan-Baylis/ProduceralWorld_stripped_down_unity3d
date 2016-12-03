@@ -1,0 +1,244 @@
+public void GenMesh(int quads, int xx, int zz, int sizeScale, MeshData data, int textureID)
+    {
+        BiomeData biome = new BiomeData();
+        float[] floats;
+        Vector3[] vertices = data.vertices;
+        int[] triangles = data.triangles;
+        Vector2[] uvs = data.uvs;
+
+        int vc = 0, tc = 0, uc = 0;
+        float step = ((float)sizeScale) / quads;
+        float uvstep = 1f / quads;
+
+        for (int x = 0; x < quads; x++)
+        {
+            for (int z = 0; z < quads; z++)
+            {
+                float _0relief0, _0relief1, _0relief2, _0relief3;
+                floats = biome.GetHeight(GetTemperature((xx + (x + 0) * step) / scale * biomeScale, (zz + (z + 0) * step) / scale * biomeScale));
+                _0relief0 = perlinScale0 * floats[0];
+                _0relief1 = perlinScale1 * floats[1];
+                _0relief2 = perlinScale2 * floats[2];
+                _0relief3 = perlinScale3 * floats[3];
+
+                float _1relief0, _1relief1, _1relief2, _1relief3;
+                floats = biome.GetHeight(GetTemperature((xx + (x + 0) * step) / scale * biomeScale, (zz + (z + 1) * step) / scale * biomeScale));
+                _1relief0 = perlinScale0 * floats[0];
+                _1relief1 = perlinScale1 * floats[1];
+                _1relief2 = perlinScale2 * floats[2];
+                _1relief3 = perlinScale3 * floats[3];
+
+                float _2relief0, _2relief1, _2relief2, _2relief3;
+                floats = biome.GetHeight(GetTemperature((xx + (x + 1) * step) / scale * biomeScale, (zz + (z + 1) * step) / scale * biomeScale));
+                _2relief0 = perlinScale0 * floats[0];
+                _2relief1 = perlinScale1 * floats[1];
+                _2relief2 = perlinScale2 * floats[2];
+                _2relief3 = perlinScale3 * floats[3];
+
+                float _3relief0, _3relief1, _3relief2, _3relief3;
+                floats = biome.GetHeight(GetTemperature((xx + (x + 1) * step) / scale * biomeScale, (zz + (z + 0) * step) / scale * biomeScale));
+                _3relief0 = perlinScale0 * floats[0];
+                _3relief1 = perlinScale1 * floats[1];
+                _3relief2 = perlinScale2 * floats[2];
+                _3relief3 = perlinScale3 * floats[3];
+
+                float v0l0 = 0, v0l1 = 0, v0l2 = 0, v0l3 = 0,
+                        v1l0 = 0, v1l1 = 0, v1l2 = 0, v1l3 = 0,
+                        v2l0 = 0, v2l1 = 0, v2l2 = 0, v2l3 = 0,
+                        v3l0 = 0, v3l1 = 0, v3l2 = 0, v3l3 = 0;
+
+                if (true)
+                {
+                    v0l0 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale0, (zz + (z + 0) * step) * perlinScale0) * _0relief0;
+                    v1l0 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale0, (zz + (z + 1) * step) * perlinScale0) * _1relief0;
+                    v2l0 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale0, (zz + (z + 1) * step) * perlinScale0) * _2relief0;
+                    v3l0 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale0, (zz + (z + 0) * step) * perlinScale0) * _3relief0;
+
+                    v0l1 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale1, (zz + (z + 0) * step) * perlinScale1) * _0relief1;
+                    v1l1 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale1, (zz + (z + 1) * step) * perlinScale1) * _1relief1;
+                    v2l1 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale1, (zz + (z + 1) * step) * perlinScale1) * _2relief1;
+                    v3l1 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale1, (zz + (z + 0) * step) * perlinScale1) * _3relief1;
+                }
+                if (sizeScale <= 9 * scale)
+                {
+                    v0l2 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale2, (zz + (z + 0) * step) * perlinScale2) * _0relief2;
+                    v1l2 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale2, (zz + (z + 1) * step) * perlinScale2) * _1relief2;
+                    v2l2 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale2, (zz + (z + 1) * step) * perlinScale2) * _2relief2;
+                    v3l2 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale2, (zz + (z + 0) * step) * perlinScale2) * _3relief2;
+                }
+                if (sizeScale <= 3 * scale)
+                {
+                    v0l3 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale3, (zz + (z + 0) * step) * perlinScale3) * _0relief3;
+                    v1l3 = Mathf.PerlinNoise((xx + (x + 0) * step) * perlinScale3, (zz + (z + 1) * step) * perlinScale3) * _1relief3;
+                    v2l3 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale3, (zz + (z + 1) * step) * perlinScale3) * _2relief3;
+                    v3l3 = Mathf.PerlinNoise((xx + (x + 1) * step) * perlinScale3, (zz + (z + 0) * step) * perlinScale3) * _3relief3;
+                }
+
+                float mul0 = curve.Evaluate(v0l0 / _0relief0);
+                float mul1 = curve.Evaluate(v1l0 / _1relief0);
+                float mul2 = curve.Evaluate(v2l0 / _2relief0);
+                float mul3 = curve.Evaluate(v3l0 / _3relief0);
+
+                vertices[vc + 0] = new Vector3((0 + (float)x) / quads, (v0l0 * mul0) + v0l1 + v0l2 + v0l3, (0 + (float)z) / quads);
+                vertices[vc + 1] = new Vector3((0 + (float)x) / quads, (v1l0 * mul1) + v1l1 + v1l2 + v1l3, (1 + (float)z) / quads);
+                vertices[vc + 2] = new Vector3((1 + (float)x) / quads, (v2l0 * mul2) + v2l1 + v2l2 + v2l3, (1 + (float)z) / quads);
+                vertices[vc + 3] = new Vector3((1 + (float)x) / quads, (v3l0 * mul3) + v3l1 + v3l2 + v3l3, (0 + (float)z) / quads);
+
+                triangles[tc + 0] = vc + 0;
+                triangles[tc + 1] = vc + 1;
+                triangles[tc + 2] = vc + 2;
+                triangles[tc + 3] = vc + 2;
+                triangles[tc + 4] = vc + 3;
+                triangles[tc + 5] = vc + 0;
+
+                uvs[uc + 0] = new Vector2(uvstep * (x - 0), uvstep * (z - 0));
+                uvs[uc + 1] = new Vector2(uvstep * (x - 0), uvstep * (z - -1));
+                uvs[uc + 2] = new Vector2(uvstep * (x - -1), uvstep * (z - -1));
+                uvs[uc + 3] = new Vector2(uvstep * (x - -1), uvstep * (z - 0));
+
+                vc += 4;
+                tc += 6;
+                uc += 4;
+            }
+        }
+    }
+
+	public class BiomeData
+{
+    public float[] GetHeight(float temp)
+    {
+        //temp                  //alt
+        //0-.2 artic            //swamp, underwater, island
+        //.2-.4 cold            //flat
+        //.4-.6 normal          //hills
+        //.6-.8 tropical        //
+        //.8-1 desert           //mountains
+
+        float relief0Mul = 0;
+        float relief1Mul = 0;
+        float relief2Mul = 0;
+        float relief3Mul = 0;
+
+        //2000, 200, 20, 2
+        if (temp >= 0f && temp < 0.19f)
+        {
+            relief0Mul = 1f;
+            relief1Mul = 3f;
+            relief2Mul = 2.5f;
+            relief3Mul = 0.001f;
+            //materials = new TerainMaterial[] { TerainMaterialSelection.clay, TerainMaterialSelection.snow};
+            //layerHeights = new float[] { 0.3f, 1000f};
+        }
+        else if (temp >= 0.19f && temp < 0.21f)
+        {
+            float percentage = (temp - 0.19f) * 50;
+            relief0Mul = Mathf.Lerp(1f, 0.5f, percentage);
+            relief1Mul = Mathf.Lerp(3f, 1.5f, percentage);
+            relief2Mul = Mathf.Lerp(2.5f, 1f, percentage);
+            relief3Mul = Mathf.Lerp(0.001f, 0.5f, percentage);
+            //materials = new TerainMaterial[] { TerainMaterialSelection.clay, TerainMaterialSelection.stone, TerainMaterialSelection.snow };
+            //layerHeights = new float[] { 0.3f, 0.5f, 1000f };
+        }
+        else if (temp >= 0.21f && temp < 0.39f)
+        {
+            relief0Mul = 0.5f;
+            relief1Mul = 1.5f;
+            relief2Mul = 1f;
+            relief3Mul = 0.5f;
+            //materials = new TerainMaterial[] { TerainMaterialSelection.clay, TerainMaterialSelection.stone, TerainMaterialSelection.snow };
+            //layerHeights = new float[] { 0.3f, 0.5f, 1000f };
+        }
+        else if (temp >= 0.39f && temp < 0.41f)
+        {
+            float percentage = (temp - 0.39f) * 50;
+            relief0Mul = Mathf.Lerp(0.5f, 1f, percentage);
+            relief1Mul = Mathf.Lerp(1.5f, 1f, percentage);
+            relief2Mul = Mathf.Lerp(1f, 0.5f, percentage);
+            relief3Mul = Mathf.Lerp(0.5f, 0.001f, percentage);
+            //materials = new TerainMaterial[] { TerainMaterialSelection.clay, TerainMaterialSelection.grass, TerainMaterialSelection.stone, TerainMaterialSelection.snow };
+            //layerHeights = new float[] { 0.2f, 0.6f, 0.9f, 1000f };
+        }
+        else if (temp >= 0.41f && temp < 0.59f)
+        {
+            relief0Mul = 1f;
+            relief1Mul = 1f;
+            relief2Mul = 0.5f;
+            relief3Mul = 0.001f;
+            //materials = new TerainMaterial[] { TerainMaterialSelection.clay, TerainMaterialSelection.grass, TerainMaterialSelection.stone, TerainMaterialSelection.snow };
+            //layerHeights = new float[] { 0.2f, 0.7f, 0.9f, 1000f};
+        }
+        else if (temp >= 0.59f && temp < 0.61f)
+        {
+            float percentage = (temp - 0.59f) * 50;
+            relief0Mul = Mathf.Lerp(1f, 0.5f, percentage);
+            relief1Mul = Mathf.Lerp(1f, 1f, percentage);
+            relief2Mul = Mathf.Lerp(0.5f, 3f, percentage);
+            relief3Mul = Mathf.Lerp(0.001f, 1f, percentage);
+            //materials = new TerainMaterial[] { TerainMaterialSelection.sand, TerainMaterialSelection.rock, TerainMaterialSelection.stone };
+            //layerHeights = new float[] { 0.3f, 0.6f, 1000f };
+        }
+        else if (temp >= 0.61f && temp < 0.79f)
+        {
+            relief0Mul = 0.5f;
+            relief1Mul = 1f;
+            relief2Mul = 3f;
+            relief3Mul = 1f;
+            //materials = new TerainMaterial[] { TerainMaterialSelection.sand, TerainMaterialSelection.rock, TerainMaterialSelection.stone };
+            //layerHeights = new float[] { 0.3f, 0.6f, 1000f };
+        }
+        else if (temp >= 0.79f && temp < 0.81f)
+        {
+            float percentage = (temp - 0.79f) * 50;
+            relief0Mul = Mathf.Lerp(0.5f, 0.001f, percentage);
+            relief1Mul = Mathf.Lerp(1f, 1f, percentage);
+            relief2Mul = Mathf.Lerp(3f, 0.001f, percentage);
+            relief3Mul = Mathf.Lerp(1f, 0.001f, percentage);
+            //materials = new TerainMaterial[] { TerainMaterialSelection.sand, TerainMaterialSelection.rock };
+            //layerHeights = new float[] { 0.8f, 1000f };
+        }
+        else if (temp >= 0.81f && temp <= 1.0f)
+        {
+            relief0Mul = 0.001f;
+            relief1Mul = 1f;
+            relief2Mul = 0.001f;
+            relief3Mul = 0.001f;
+            //materials = new TerainMaterial[] { TerainMaterialSelection.sand, TerainMaterialSelection.rock };
+            //layerHeights = new float[] { 0.8f, 1000f };
+        }
+
+        return new float[] { relief0Mul, relief1Mul, relief2Mul, relief3Mul };
+    }
+
+    public Color GetColor(float heightFrac)
+    {
+        /*float red = 0f, green = 0f, blue = 0f;  
+
+        for(int i = 0; i < layerHeights.Length; i++)
+        {
+            if(heightFrac <= layerHeights[i])
+            {
+                red = materials[i].red;
+                green = materials[i].green;
+                blue = materials[i].blue;
+                break;
+            }
+        }
+        return new Color(red, green, blue);*/
+
+        return new Color(0.1f, 0.5f, 0.1f);
+    }
+
+    public TerainMaterial GetMaterial(float heightFrac)
+    {
+        /*for(int i = 0; i < layerHeights.Length; i++)
+        {
+            if(heightFrac <= layerHeights[i])
+            {
+                return materials[i];
+            }
+        }
+        return materials[0];*/
+
+        return TerainMaterialSelection.grass;
+    }
+}
